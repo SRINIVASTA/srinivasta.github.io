@@ -1,37 +1,415 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appala Srinivas Tanakala | FinTech AI Architect</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        h1 { color: #1a73e8; border-bottom: 2px solid #e8eaed; padding-bottom: 10px; }
-        h2 { color: #202124; margin-top: 30px; }
-        .badge { background: #e8f0fe; color: #1a73e8; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.9em; }
-        .btn { display: inline-block; background: #1a73e8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 15px; }
-        .btn:hover { background: #1557b0; }
-        .project-card { border: 1px solid #dadce0; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
-    </style>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ <title>SRINIVASTA | AI Engineer & Product Builder</title> 
+ <!-- Icons for Data Science, Finance, and AI branding --> 
+ <style> 
+ :root { 
+ --bg-main: #060a0f; 
+ --bg-card: #0b131a; 
+ --border-color: #172430; 
+ --text-primary: #f3f4f6; 
+ --text-secondary: #9ca3af; 
+ --accent-glow: #39ff14; 
+ --accent-gold: #ffd700;
+ } 
+ * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; } 
+ body { 
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+ background-color: var(--bg-main); 
+ color: var(--text-primary); 
+ overflow-x: hidden; 
+ position: relative; 
+ } 
+ #graphics-canvas { 
+ position: fixed; 
+ top: 0; left: 0; width: 100vw; height: 100vh; 
+ z-index: 0; pointer-events: none; 
+ } 
+ header { 
+ position: fixed; top: 0; width: 100%; 
+ display: flex; justify-content: space-between; align-items: center; 
+ padding: 20px 8%; background: rgba(6, 10, 15, 0.85); 
+ backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); 
+ z-index: 100; 
+ } 
+ .logo { font-size: 1.3rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; } 
+ nav a { color: var(--text-secondary); text-decoration: none; margin-left: 25px; font-size: 0.95rem; 
+transition: 0.2s; } 
+ nav a:hover { color: var(--accent-glow); text-shadow: 0 0 8px var(--accent-glow); } 
+ .container { max-width: 1140px; margin: auto; padding: 120px 20px 60px 20px; position: relative; 
+z-index: 1; } 
+ .hero { display: flex; align-items: center; justify-content: space-between; min-height: 65vh; 
+padding-bottom: 60px; } 
+ .hero-text { max-width: 650px; } 
+ .hero-text h1 { font-size: 3.8rem; margin-bottom: 10px; color: #fff; letter-spacing: -1px; } 
+ .hero-text h3 { font-size: 1.6rem; color: var(--accent-glow); margin-bottom: 20px; font-weight: 
+500; text-shadow: 0 0 10px rgba(57, 255, 20, 0.3); } 
+ .hero-text p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; } 
+ .hero-visual { width: 320px; height: 320px; display: flex; justify-content: center; align-items: 
+center; position: relative; } 
+ .graphic-ring { position: absolute; border: 2px dashed rgba(57, 255, 20, 0.3); width: 100%; 
+height: 100%; border-radius: 50%; animation: spin 20s linear infinite; } 
+
+ /* PERMANENT CHOKE FIX: Separates the neon border layer from the mask container */
+ .profile-mask-frame {
+ width: 240px;
+ height: 240px;
+ border-radius: 50%;
+ border: 3px solid var(--accent-glow);
+ box-shadow: 0 0 20px rgba(57, 255, 20, 0.45);
+ z-index: 2;
+ overflow: hidden;
+ background: var(--bg-main);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ position: relative;
+ }
+
+ .profile-avatar-img {
+ width: 102% !important; /* Pushes the image slightly wider to physically overlap the boundary */
+ height: 102% !important;
+ object-fit: cover !important;
+ object-position: center;
+ display: block;
+ border-radius: 50%;
+ }
+ 
+ section { padding: 80px 0 40px 0; border-top: 1px solid var(--border-color); } 
+ section h2 { font-size: 2.2rem; margin-bottom: 40px; color: #fff; position: relative; } 
+ section h2::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 50px; height: 3px; 
+background: var(--accent-glow); box-shadow: 0 0 8px var(--accent-glow); } 
+ 
+ .skills-flex { 
+ display: flex; 
+ flex-wrap: wrap; 
+ gap: 14px; 
+ margin-top: 25px; 
+ } 
+ .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 
+30px; } 
+ .proj-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 
+12px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; 
+transition: 0.3s; } 
+ .proj-card:hover { transform: translateY(-5px); border-color: var(--accent-glow); box-shadow: 0 
+10px 30px rgba(57, 255, 20, 0.08); } 
+ .proj-meta { display: flex; gap: 12px; margin-bottom: 20px; font-size: 1.1rem; color: var(--text-secondary); } 
+ .proj-links { display: flex; gap: 20px; } 
+ .proj-links a { color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 
+600; display: flex; align-items: center; gap: 5px; } 
+ .proj-links a:hover { text-shadow: 0 0 8px var(--accent-gold); } 
+ 
+ .timeline { position: relative; max-width: 800px; margin: auto; padding-left: 30px; } 
+ .timeline::before { content: ''; position: absolute; left: 8px; top: 5px; width: 2px; height: 95%; 
+background: var(--border-color); } 
+ .timeline-item { position: relative; margin-bottom: 45px; } 
+ .timeline-dot { position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 
+50%; background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); } 
+ .timeline-item h3 { font-size: 1.3rem; color: #fff; margin-bottom: 5px; } 
+ .timeline-company { color: var(--accent-glow); font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; } 
+ .timeline-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; } 
+ .timeline-item p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; } 
+ footer { text-align: center; padding: 40px; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; position: relative; z-index: 1; } 
+ @keyframes spin { 100% { transform: rotate(360deg); } } 
+ @media(max-width: 768px) { 
+ .hero { flex-direction: column; text-align: center; gap: 40px; } 
+ .hero-text h1 { font-size: 2.8rem; } 
+ header { padding: 20px; } nav { display: none; } 
+ } 
+ </style> 
 </head>
-<body>
-    <h1>Appala Srinivas Tanakala</h1>
-    <p><strong>FinTech Data Scientist & AI-Augmented Application Architect</strong></p>
-    <p><span class="badge">Kaggle Bronze Medalist</span> | 20+ Years Capital Markets Domain Expertise | 4+ Years AI/RAG Infrastructure Engineering</p>
+<body> 
+ <canvas id="graphics-canvas"></canvas> 
+ <header> 
+ <div class="logo">SRINIVASTA.DEV</div> 
+ <nav> 
+ <a href="#about">About</a> 
+ <a href="#skills">Skills</a> 
+ <a href="#projects">Projects</a> 
+ <a href="#certifications">Certifications</a> 
+ <a href="#timeline">Experience</a> 
+ </nav> 
+ </header> 
+ <div class="container"> 
+ <!-- Hero Introduction Layout --> 
+ <section class="hero" id="about" style="border:none; padding-top:0;"> 
+ <div class="hero-text"> 
+ <h1>T A Srinivas</h1> 
+ <h3>AI Engineer & Product Builder</h3> 
+ <p>Bridging the gap between complex financial intuition and production-grade AI systems. 
+Backed by over 4+ years of data science expertise combined with a rich background in capital 
+markets and analytics frameworks.</p> 
+ 
+ <!-- Enterprise Advisory Availability Banner --> 
+ <div style="background: rgba(57, 255, 20, 0.04); border-left: 4px solid var(--accent-glow); 
+padding: 18px 24px; border-radius: 0 8px 8px 0; margin-top: 25px; box-shadow: 0 4px 20px 
+rgba(0,0,0,0.2); max-width: 580px;"> 
+ <p style="color: var(--text-primary); font-size: 0.95rem; font-weight: 600; line-height: 1.6; 
+margin: 0;"> 
+ Availability: <span style="font-weight: 400; color: var(--text-secondary);">Open to 
+strategic enterprise consulting, startup advisory roles, and technical partnerships.</span> 
+ </p> 
+ </div> 
+ </div> 
+ <div class="hero-visual"> 
+ <div class="graphic-ring"></div> 
+ <!-- Cleared subpixel overlap structure wrapper -->
+ <div class="profile-mask-frame">
+   <img src="profile.jpg" alt="T A Srinivas Profile Photo" class="profile-avatar-img"> 
+ </div>
+ </div> 
+ </section>
+<!-- BLOCK 1: COPY AND PASTE THIS INTERACTIVE STYLE TAG IN YOUR HEAD OR TOP OF FILE -->
+<style>
+    .tech-capsule {
+        background: #0d1520; 
+        border: 1px solid #1e293b; 
+        padding: 6px 18px 6px 6px; 
+        border-radius: 10px; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 12px; 
+        font-weight: 600; 
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tech-capsule:hover {
+        transform: translateY(-3px);
+        border-color: #3b82f6;
+        box-shadow: 0 0 14px rgba(59, 130, 246, 0.4);
+        background: #111a2e;
+    }
+    .tech-icon-frame {
+        width: 32px; 
+        height: 32px; 
+        border-radius: 6px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+    }
+</style>
+
+<!-- Technical Toolkit Stack (6 Columns Layout) --> 
+<section id="skills" style="max-width: 1400px; margin: 0 auto;"> 
+ <h2>Skills & Tools</h2> 
+ <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; width: 100%;">
+ 
+  <!-- Column 1 -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">🔤 Languages</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Python (Expert)</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">SQL Server</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Advanced Excel</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Column 2 -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">☁️ Cloud & Data</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Snowflake Warehouse</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Cortex AI</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Streamlit in Snowflake</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Column 3 -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">🐙 DevOps & VC</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">GitHub VC</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Cloud Deployments</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">MLOps Pipelines</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Column 4 -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">📦 Frameworks</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Pandas & NumPy</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Scikit-Learn</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 600; font-size: 0.85rem;">NLP / Text Analytics</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">RAG Frameworks</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">LLM Integration</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Streamlit</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Column 5 (Plotly Successfully Integrated Here) -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">📊 Visuals & BI</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Power BI</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Tableau</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Plotly</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Matplotlib & Seaborn</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Column 6 -->
+  <div class="proj-card" style="padding: 20px 15px;">
+   <div>
+    <h3 style="color: #94a3b8; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">📈 Core Domains</h3>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Financial Risk</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Portfolio Opt.</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Stock Market Forecast</li>
+     <li style="color: var(--text-primary); margin-bottom: 8px; font-weight: 500; font-size: 0.85rem;">Mortgage Automation</li>
+    </ul>
+   </div>
+  </div>
+
+ </div>
+</section>
+ <section id="projects"> 
+ <h2>Featured Web Applications</h2> 
+ <div class="projects-grid"> 
+ <!-- Smart Bhojan --> 
+ <div class="proj-card"> 
+ <div> 
+ <div class="proj-meta"></div> 
+ <h3>Smart Bhojan</h3> 
+ <p>An AI-driven nutrition & recipe intelligence dashboard featuring automated health 
+scoring, dynamic macronutrient visualization, and automated PDF reporting.</p> 
+ </div> 
+ <div class="proj-links"> 
+ <a href="https://github.com/SRINIVASTA/SmartBhojan" target="_blank">Code</a> 
+ <a href="https://smartbhojan-9hebtsjz3wun3adggzry6s.streamlit.app/" target="_blank" style="color: var(--accent-glow);">Live App</a> 
+ </div> 
+ </div> 
+ <!-- Stock Analysis App --> 
+ <div class="proj-card"> 
+ <div> 
+ <div class="proj-meta"></div> 
+ <h3>Stock Analysis App</h3> 
+ <p>A powerful analysis application streaming live price records, interactive candlestick 
+charts, major holder breakdowns, and technical trend flags (RSI, MACD).</p> 
+ </div> 
+ <div class="proj-links"> 
+ <a href="https://github.com/SRINIVASTA/stock-analysis-combo" target="_blank">Code</a> 
+ <a href="https://stock-analysis-combo-c7zmpbn2skp5h8rnrpchdy.streamlit.app/" target="_blank" style="color: var(--accent-glow);">Live App</a> 
+ </div> 
+ </div> 
+ <div class="proj-card"> 
+ <div> 
+ <div class="proj-meta"></div> 
+ <h3>Banking Risk Analytics</h3> 
+ <p>An end-to-end fintech predictive system implementing automated user generation, 
+credit risk tiering algorithms, and churn simulators via Plotly.</p> 
+ </div> 
+ <div class="proj-links"> 
+ <a href="https://github.com/SRINIVASTA/banking-risk-predictive-analytics" target="_blank">Code</a> 
+ <a href="https://banking-risk-predictive-analytics-n7vyraa7c2m5eebaomtylc.streamlit.app/" target="_blank" style="color: var(--accent-glow);">Live App</a> 
+ </div> 
+ </div> 
+<!-- REPAIRED CONTAINER BLOCK: Centers perfectly on all device screens -->
+<div style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin: 50px auto 0 auto; width: 100%;"> 
+  <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem; width: 100%;">
+    Looking for something specific? I have over 50+ specialized micro-services and models open-sourced.
+  </p> 
+  <a href="https://github.com/srinivasta" target="_blank" style="display: inline-block; background: transparent; border: 2px solid var(--accent-glow); color: var(--accent-glow); padding: 12px 28px; border-radius: 6px; font-weight: 700; text-decoration: none; transition: 0.3s; box-shadow: 0 0 10px rgba(57, 255, 20, 0.15);"> 
+    Explore All 50+ Repositories 
+  </a> 
+</div>
+ </section> 
+<section id="certifications"> 
+  <h2>Certifications & Achievements</h2> 
+  <div class="projects-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px;"> 
     
-    <h2>About My Startup & Tech Stack</h2>
-    <p>Building production-ready, AI-augmented analytical systems, Predictive Models, and Generative AI frameworks designed specifically for complex financial markets. Specializing in connecting real-time market trading intelligence with predictive statistical modeling layers via Python, Scikit-Learn, and secure RAG architectures.</p>
-    
-    <h2>Core Innovation Portfolio</h2>
-    <div class="project-card">
-        <h3>Financial Predictive Pipelines & RAG Systems</h3>
-        <p>End-to-end Machine Learning architectures built to parse unstructured enterprise multi-page data records into structured, high-integrity analytics streams deployed via production Streamlit dashboards.</p>
-        <a href="https://github.com/SRINIVASTA" class="btn">View Source Repositories</a>
+    <!-- 1. ADVANCED AI, DATA SCIENCE & ANALYTICS MASSTERCASES -->
+    <div class="proj-card" style="border-color: rgba(57, 255, 20, 0.2); box-shadow: 0 4px 20px rgba(57, 255, 20, 0.03);"> 
+      <div> 
+        <div style="font-size: 1.5rem; margin-bottom: 15px;">🤖</div>
+        <h3>AI & Cloud Data Engineering</h3> 
+        <p style="margin-bottom: 12px; font-weight: 600; color: var(--accent-glow); font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;">Technical Core Tracks</p>
+        <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary);">
+          • <strong>Google Cloud Technical Series</strong> – AI Agents Edition, Google Cloud Asia Pacific (Issued Aug 2025)<br>
+          • <strong>Certificate of Attendance</strong> – Snowflake Discover AI Data Cloud & Insights Forum<br>
+          • <strong>AI Specialization Masterclass</strong> – Verified Certification by ExcelR Solutions (2022)<br>
+          • <strong>Data Analyst & Business Analyst Suite</strong> – Professional Track Credentials, ExcelR Solutions (2022)<br>
+          • <strong>Machine Learning Foundations</strong> – Industrial Analytics Training, Tata Steel Frameworks (2020)<br>
+          • <strong>Electric Vehicle Design Track</strong> – Engineering Master Class, Pantech eLearning (2022)
+        </p> 
+      </div> 
     </div>
 
-    <h2>Contact & Verification</h2>
-    <p>📍 Location: Visakhapatnam, India</p>
-    <p>📧 Email: tasrinivass@gmail.com</p>
-    <p>💼 Availability: Open to strategic enterprise consulting, startup advisory roles, and technical partnerships.</p>
-</body>
+    <!-- 2. HIGH-LEVEL GLOBAL PLACEMENTS & ADVANCED SPECIALIZATIONS -->
+    <div class="proj-card" style="border-color: rgba(205, 127, 50, 0.35); box-shadow: 0 4px 20px rgba(205, 127, 50, 0.05);"> 
+      <div> 
+        <div style="width: 36px; height: 36px; background-color: #cd7f32; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 6px; margin-bottom: 20px; box-shadow: 0 0 12px rgba(205, 127, 50, 0.45);"> 
+          <svg viewBox="0 0 512 512" style="width: 100%; height: 100%; fill: #fff;">
+            <path d="M366.1 48H412c4.1 0 7.4 3.4 7.4 7.5v43.2c0 2.5-1.3 4.9-3.4 6.2L277.3 226.6l141.5 218.4c1.9 2.9 2.1 6.5.6 9.6-1.5 3.1-4.7 5.4-8.2 5.4H366c-3.4 0-6.5-1.9-8.2-4.9L228.4 259.9V444c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V68c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v142.1l121.5-157.2c1.7-2.2 4.3-3.9 7.4-3.9z"/> 
+          </svg> 
+        </div> 
+        <h3>Global Honors & Space Geodata</h3> 
+        <p style="margin-bottom: 12px; font-weight: 600; color: var(--accent-gold); font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;">Kaggle Expert & Space Intelligence</p>
+        <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary);">
+          • <strong>Kaggle Notebooks Expert Status</strong> – Global ranking badge for predictive analysis pipeline optimizations<br>
+          • <strong>Kaggle Santa 2024 Placements</strong> – Bronze Medalist, Permutation Puzzle Optimization Track<br>
+          • <strong>Kaggle Podcast Analytics</strong> – Bronze Medalist, User Listening Time Predictive Challenge<br>
+          • <strong>AI/ML for Geodata Analysis</strong> – IIRS, Indian Space Research Organisation / ISRO (2024)
+        </p> 
+      </div> 
+    </div> 
+
+    <!-- 3. FINANCIAL SECTOR COMPLIANCE & STRATEGIC DIGITAL OPERATIONS -->
+    <div class="proj-card" style="border-color: rgba(255, 215, 0, 0.15); box-shadow: 0 4px 20px rgba(255, 215, 0, 0.02);"> 
+      <div> 
+        <div style="font-size: 1.5rem; margin-bottom: 15px;">📈</div>
+        <h3>Capital Markets & Digital Strategy</h3> 
+        <p style="margin-bottom: 12px; font-weight: 600; color: var(--accent-gold); font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;">Regulatory Compliance & Architecture</p>
+        <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary);">
+          • <strong>NISM Series-VIII: Equity Derivatives</strong> – Regulatory Market Certification, National Institute of Securities Markets<br>
+          • <strong>NISM Depository Participant Module</strong> – Operational Framework Licensure, National Institute of Securities Markets<br>
+          • <strong>Digital Marketing Infrastructure</strong> – Operational Architecture Certification, Accenture Academic Track (2020)<br>
+          • <strong>Digital Marketing Architecture</strong> – Systems & Funnel Performance Training, BCUBE Hyderabad (2016)
+        </p> 
+      </div> 
+    </div> 
+
+  </div> 
+</section> 
+ <section id="timeline"> 
+ <h2>Professional Track</h2> 
+ <div class="timeline"> 
+ <div class="timeline-item"> 
+ <div class="timeline-dot"></div> 
+ <h3>AI Product Builder & Data Consultant</h3> 
+ <div class="timeline-company">Enterprise Solutions</div> 
+ <div class="timeline-date">4+ Years Experience</div> 
+ <p>Deploying full-stack web architectures, predictive modeling pipelines, and deep 
+learning analytics workflows to streamline operational tracking.</p> 
+ </div> 
+ <div class="timeline-item"> 
+ <div class="timeline-dot"></div> 
+ <h3>Executive Leadership</h3> 
+ <div class="timeline-company">Financial Services & Real Estate Capital Markets</div> 
+ <div class="timeline-date">20+ Years Experience</div> 
+ <p>Directing strategic risk assessment, asset valuation, and underlying business-logic 
+configurations across compliance frameworks.</p> 
+ </div> 
+ </div> 
+ </section> 
+ </div> <!-- Close main container container --> 
+ <footer> 
+ <p>Made with ♥ by Srinivasta | Hosted on srinivasta.github.io</p> 
+ </footer> 
+ <script src="script.js"></script> 
+</body> 
 </html>
